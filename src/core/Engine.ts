@@ -22,6 +22,8 @@ export interface SceneModule {
   exit(to: SceneId): void;
   update(dt: number, time: number): void;
   onQuality?(pixelRatio: number): void;
+  /** 같은 모듈 안에서 화면만 바뀔 때 카메라 재지정 */
+  refocus?(): void;
   dispose(): void;
 }
 
@@ -62,7 +64,7 @@ const GradeShader = {
 const SCENE_VIEW: Record<SceneId, { camera: number[]; grade: GradeId }> = {
   title: { camera: CONFIG.camera.title, grade: 'workshop' },
   workshop: { camera: CONFIG.camera.workshop, grade: 'workshop' },
-  galaxy: { camera: CONFIG.camera.title, grade: 'galaxy' },
+  galaxy: { camera: CONFIG.camera.galaxy, grade: 'galaxy' },
 };
 
 export class Engine {
@@ -92,6 +94,10 @@ export class Engine {
   /** 게임 시간 배속 (히트스톱 0, 연출 빨리감기 >1) */
   timeScale = 1;
   private offs: Array<() => void> = [];
+  private shakeAmt = 0;
+  private hitstopTimer = 0;
+  /** 광과민성 옵션: false면 흔들림을 끈다 */
+  shakeEnabled = true;
 
   constructor(private canvas: HTMLCanvasElement, quality: Quality, scene: SceneId) {
     this.quality = quality;
@@ -164,6 +170,44 @@ export class Engine {
     gsap.to(u, { value: 0, duration, ease: 'power2.out' });
   }
 
+  /** 카메라 흔들기 (누적, 감쇠) */
+  shake(amount: number): void {
+    if (!this.shakeEnabled) return;
+    this.shakeAmt = Math.min(0.6, this.shakeAmt + amount * CONFIG.feel.shake);
+  }
+
+  /** 히트스톱: 실제 시간 기준으로 잠깐 게임 시간을 거의 멈춘다 */
+  hitstop(seconds: number): void {
+    if (seconds <= 0) return;
+    this.timeScale = 0.03;
+    clearTimeout(this.hitstopTimer);
+    this.hitstopTimer = window.setTimeout(() => (this.timeScale = 1), seconds * 1000);
+  }
+
+  /** 카메라 목표 위치 이동 (lookAt은 look) */
+  cameraTo(pos: number[], look: number[] = [0, 0, 0], duration = 1.4, ease = 'power3.inOut'): void {
+    const [x, y, z] = pos;
+    gsap.to(this.camPos, { x, y, z, duration, ease, overwrite: true });
+    const [lx, ly, lz] = look;
+    gsap.to(this.camLook, { x: lx, y: ly, z: lz, duration, ease, overwrite: true });
+  }
+
+  /** 월드 좌표 → 화면 픽셀 */
+  project(v: THREE.Vector3): { x: number; y: number } {
+    _tmp.copy(v).project(this.camera);
+    return { x: (_tmp.x * 0.5 + 0.5) * window.innerWidth, y: (-_tmp.y * 0.5 + 0.5) * window.innerHeight };
+  }
+
+  /** 화면 좌표 → 레이 (피킹용) */
+  ray(clientX: number, clientY: number, out: THREE.Raycaster): THREE.Raycaster {
+    out.setFromCamera(new THREE.Vector2((clientX / window.innerWidth) * 2 - 1, -(clientY / window.innerHeight) * 2 + 1), this.camera);
+    return out;
+  }
+
+  get dom(): HTMLCanvasElement {
+    return this.canvas;
+  }
+
   stats() {
     const info = this.renderer.info;
     return {
@@ -232,7 +276,7 @@ export class Engine {
   }
 
   private enter(to: SceneId, from: SceneId | null): void {
-    // 은하 뷰(Phase 4) 전까지 타이틀은 공방 원반을 멀리서 비춘다
+    // 타이틀은 공방 원반을 멀리서 비춘다
     const module = this.modules.get(to) ?? this.modules.get('workshop') ?? null;
     if (module !== this.active) {
       if (this.active) {
@@ -248,10 +292,11 @@ export class Engine {
   }
 
   private switchScene(from: SceneId, to: SceneId): void {
-    this.enter(to, from);
     const view = SCENE_VIEW[to];
-    const [x, y, z] = view.camera;
-    gsap.to(this.camPos, { x, y, z, duration: 1.8, ease: 'power3.inOut', overwrite: true });
+    this.cameraTo(view.camera, [0, 0, 0], 1.8);
+    this.enter(to, from);
+    // 같은 모듈을 계속 쓰는 전환(타이틀↔공방)에도 씬이 카메라를 정하게 한다
+    if (this.active && this.active.id === to) this.active.refocus?.();
     if (SCENE_VIEW[from].grade !== view.grade) this.applyGrade(view.grade, 1.6);
   }
 
@@ -288,11 +333,17 @@ export class Engine {
       .copy(this.camPos)
       .multiplyScalar(this.fit)
       .add(_tmp.set(this.smoothPointer.x * par, this.smoothPointer.y * par * 0.6, 0));
+    if (this.shakeAmt > 0.001) {
+      const s = this.shakeAmt;
+      this.camera.position.x += (Math.sin(this.time * 91.0) + Math.sin(this.time * 47.3)) * 0.5 * s;
+      this.camera.position.y += (Math.sin(this.time * 73.1) + Math.sin(this.time * 29.7)) * 0.5 * s;
+      this.shakeAmt *= Math.exp(-dt * 9);
+    }
     this.camera.lookAt(this.camLook);
 
     this.nebula.update(this.renderer, this.time, this.camera.position);
     this.stars.update(dt, this.time, this.smoothPointer);
-    this.active?.update(dt, this.time);
+    this.active?.update(dt * this.timeScale, this.time);
 
     if (this.usePost() && this.composer) this.composer.render(dt);
     else this.renderer.render(this.scene, this.camera);

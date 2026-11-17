@@ -1,24 +1,458 @@
 {
-  "version": 1,
-  "note": "weight = base + Σ(구성비 × per) (+ 조건 충족 시 bonus). requires를 못 채우면 후보에서 빠진다. 수치는 Phase 4 밸런싱에서 조정.",
-  "planets": [
-    { "id": "rocky", "name": "암석 행성", "grade": "N", "shader": "rock", "base": 10, "per": { "silicon": 30, "iron": 20, "mantle": 40, "carbon": 10 } },
-    { "id": "dustdwarf", "name": "먼지 왜성", "grade": "N", "shader": "dust", "base": 12, "per": { "dust": 40, "hydrogen": 10 } },
-
-    { "id": "ice", "name": "얼음 행성", "grade": "R", "shader": "ice", "base": 0, "per": { "ice": 120, "water": 20 }, "requires": { "share": { "ice": 0.3 } } },
-    { "id": "desert", "name": "사막 행성", "grade": "R", "shader": "desert", "base": 0, "per": { "silicon": 90, "mantle": 30 }, "requires": { "share": { "silicon": 0.3 } } },
-    { "id": "lava", "name": "용암 행성", "grade": "R", "shader": "lava", "base": 0, "per": { "lava": 120, "iron": 30 }, "requires": { "share": { "lava": 0.3 } } },
-
-    { "id": "gasgiant", "name": "가스 거인", "grade": "SR", "shader": "gas", "base": 0, "per": { "gas": 140, "helium": 30, "hydrogen": 20 }, "requires": { "share": { "gas": 0.35 }, "merges": 8 } },
-    { "id": "ocean", "name": "바다 행성", "grade": "SR", "shader": "ocean", "base": 0, "per": { "water": 130, "ice": 20 }, "requires": { "share": { "water": 0.4 }, "merges": 6 } },
-    { "id": "ringed", "name": "고리 행성", "grade": "SR", "shader": "gas", "forceRing": true, "base": 0, "per": { "gas": 80, "ice": 80, "dust": 30 }, "requires": { "share": { "gas": 0.2, "ice": 0.15 }, "merges": 8 } },
-
-    { "id": "life", "name": "생명 행성", "grade": "SSR", "shader": "terra", "base": 0, "per": { "lifeseed": 400, "water": 60, "mantle": 30 }, "requires": { "has": ["lifeseed"], "share": { "water": 0.15 } } },
-    { "id": "crystal", "name": "수정 행성", "grade": "SSR", "shader": "crystal", "base": 0, "per": { "silicon": 60, "ice": 60, "neutron": 200 }, "requires": { "has": ["neutron"], "share": { "silicon": 0.15, "ice": 0.1 } } },
-    { "id": "twin", "name": "쌍둥이 행성", "grade": "SSR", "shader": "terra", "twin": true, "base": 0, "per": { "mantle": 80, "water": 80 }, "requires": { "balance": { "of": ["mantle", "water"], "tolerance": 0.08 }, "share": { "mantle": 0.2, "water": 0.2 }, "maxCombo": 4 } },
-
-    { "id": "diamond", "name": "다이아몬드 행성", "grade": "UR", "hidden": true, "shader": "diamond", "base": 0, "per": { "carbon": 150, "neutron": 150 }, "requires": { "recipes": ["diamondcore"], "share": { "carbon": 0.25 } } },
-    { "id": "rogue", "name": "떠돌이 행성", "grade": "UR", "hidden": true, "shader": "rogue", "base": 0, "per": { "dust": 60, "ice": 60 }, "requires": { "unstable": true, "maxCombo": 6 } },
-    { "id": "civilization", "name": "문명 행성", "grade": "UR", "hidden": true, "shader": "terra", "cityLights": true, "base": 0, "per": { "lifeseed": 500, "mantle": 60, "water": 60 }, "requires": { "has": ["lifeseed"], "recipes": ["lifeseed", "mantle", "water"], "maxCombo": 5 } }
-  ]
+ "version": 1,
+ "note": "weight = base + Σ(구성비 × per) (+ 조건 충족 시 bonus). requires를 못 채우면 후보에서 빠진다. 수치는 Phase 4 밸런싱에서 조정.",
+ "planets": [
+  {
+   "id": "rocky",
+   "name": "암석 행성",
+   "grade": "N",
+   "shader": "rock",
+   "base": 10,
+   "per": {
+    "silicon": 30,
+    "iron": 20,
+    "mantle": 40,
+    "carbon": 10
+   },
+   "look": {
+    "kind": "terrain",
+    "low": "#6b5a4e",
+    "high": "#a8907a",
+    "peak": "#d9c9b6",
+    "sea": -1,
+    "deep": "#000000",
+    "shallow": "#000000",
+    "cloud": 0.15,
+    "atmo": "#c9b8ff",
+    "emissive": 0,
+    "ice": 0.05
+   },
+   "desc": "단단한 바위로 이루어진 가장 흔한 행성."
+  },
+  {
+   "id": "dustdwarf",
+   "name": "먼지 왜성",
+   "grade": "N",
+   "shader": "dust",
+   "base": 12,
+   "per": {
+    "dust": 40,
+    "hydrogen": 10
+   },
+   "look": {
+    "kind": "terrain",
+    "low": "#5c4f6e",
+    "high": "#9a88b0",
+    "peak": "#d4c8e6",
+    "sea": -1,
+    "deep": "#000000",
+    "shallow": "#000000",
+    "cloud": 0.0,
+    "atmo": "#b9a2ff",
+    "emissive": 0,
+    "ice": 0
+   },
+   "desc": "먼지가 겨우 뭉친 작고 포근한 왜성."
+  },
+  {
+   "id": "ice",
+   "name": "얼음 행성",
+   "grade": "R",
+   "shader": "ice",
+   "base": 0,
+   "per": {
+    "ice": 120,
+    "water": 20
+   },
+   "requires": {
+    "share": {
+     "ice": 0.3
+    }
+   },
+   "look": {
+    "kind": "terrain",
+    "low": "#7fa9d6",
+    "high": "#cfe8ff",
+    "peak": "#ffffff",
+    "sea": 0.35,
+    "deep": "#2a5d9a",
+    "shallow": "#7cc8ff",
+    "cloud": 0.35,
+    "atmo": "#9be4ff",
+    "emissive": 0,
+    "ice": 0.6,
+    "aurora": 1
+   },
+   "desc": "얼음 지각 위로 오로라가 흐른다."
+  },
+  {
+   "id": "desert",
+   "name": "사막 행성",
+   "grade": "R",
+   "shader": "desert",
+   "base": 0,
+   "per": {
+    "silicon": 90,
+    "mantle": 30
+   },
+   "requires": {
+    "share": {
+     "silicon": 0.3
+    }
+   },
+   "look": {
+    "kind": "terrain",
+    "low": "#b8743e",
+    "high": "#e4ad6a",
+    "peak": "#f6dcb0",
+    "sea": -1,
+    "deep": "#000000",
+    "shallow": "#000000",
+    "cloud": 0.08,
+    "atmo": "#ffc48a",
+    "emissive": 0,
+    "ice": 0.04
+   },
+   "desc": "모래 바람이 끝없이 부는 붉은 행성."
+  },
+  {
+   "id": "lava",
+   "name": "용암 행성",
+   "grade": "R",
+   "shader": "lava",
+   "base": 0,
+   "per": {
+    "lava": 120,
+    "iron": 30
+   },
+   "requires": {
+    "share": {
+     "lava": 0.3
+    }
+   },
+   "look": {
+    "kind": "terrain",
+    "low": "#2a1410",
+    "high": "#4a2a20",
+    "peak": "#7a4a3a",
+    "sea": 0.42,
+    "deep": "#ff3d0a",
+    "shallow": "#ffb02a",
+    "cloud": 0.1,
+    "atmo": "#ff7a4a",
+    "emissive": 1,
+    "ice": 0
+   },
+   "desc": "갈라진 지각 틈으로 용암이 빛난다."
+  },
+  {
+   "id": "gasgiant",
+   "name": "가스 거인",
+   "grade": "SR",
+   "shader": "gas",
+   "base": 0,
+   "per": {
+    "gas": 140,
+    "helium": 30,
+    "hydrogen": 20
+   },
+   "requires": {
+    "share": {
+     "gas": 0.35
+    },
+    "merges": 8
+   },
+   "look": {
+    "kind": "gas",
+    "low": "#c98a5a",
+    "high": "#f2d2a6",
+    "peak": "#fff1dc",
+    "sea": -1,
+    "deep": "#8a4a2a",
+    "shallow": "#e8b080",
+    "cloud": 0,
+    "atmo": "#ffd0a8",
+    "emissive": 0,
+    "ice": 0
+   },
+   "desc": "거대한 가스 띠가 천천히 소용돌이친다."
+  },
+  {
+   "id": "ocean",
+   "name": "바다 행성",
+   "grade": "SR",
+   "shader": "ocean",
+   "base": 0,
+   "per": {
+    "water": 130,
+    "ice": 20
+   },
+   "requires": {
+    "share": {
+     "water": 0.4
+    },
+    "merges": 6
+   },
+   "look": {
+    "kind": "terrain",
+    "low": "#3f8a5a",
+    "high": "#8ac27a",
+    "peak": "#f2f2e8",
+    "sea": 0.62,
+    "deep": "#0d2f6e",
+    "shallow": "#2a9ad6",
+    "cloud": 0.45,
+    "atmo": "#7ac8ff",
+    "emissive": 0,
+    "ice": 0.15
+   },
+   "desc": "행성 전체가 깊은 바다로 덮여 있다."
+  },
+  {
+   "id": "ringed",
+   "name": "고리 행성",
+   "grade": "SR",
+   "shader": "gas",
+   "forceRing": true,
+   "base": 0,
+   "per": {
+    "gas": 80,
+    "ice": 80,
+    "dust": 30
+   },
+   "requires": {
+    "share": {
+     "gas": 0.2,
+     "ice": 0.15
+    },
+    "merges": 8
+   },
+   "look": {
+    "kind": "gas",
+    "low": "#7ab0c8",
+    "high": "#d6eef2",
+    "peak": "#ffffff",
+    "sea": -1,
+    "deep": "#3a6a8a",
+    "shallow": "#a8d8e8",
+    "cloud": 0,
+    "atmo": "#bfe9ff",
+    "emissive": 0,
+    "ice": 0
+   },
+   "desc": "얼음과 먼지로 된 고리를 두른 행성."
+  },
+  {
+   "id": "life",
+   "name": "생명 행성",
+   "grade": "SSR",
+   "shader": "terra",
+   "base": 0,
+   "per": {
+    "lifeseed": 400,
+    "water": 60,
+    "mantle": 30
+   },
+   "requires": {
+    "has": [
+     "lifeseed"
+    ],
+    "share": {
+     "water": 0.15
+    }
+   },
+   "look": {
+    "kind": "terrain",
+    "low": "#2f8a4a",
+    "high": "#86c25a",
+    "peak": "#efe8d0",
+    "sea": 0.5,
+    "deep": "#0a3a7a",
+    "shallow": "#28b0c8",
+    "cloud": 0.55,
+    "atmo": "#8fd8ff",
+    "emissive": 0,
+    "ice": 0.12
+   },
+   "desc": "생명의 씨앗이 싹튼 푸른 행성."
+  },
+  {
+   "id": "crystal",
+   "name": "수정 행성",
+   "grade": "SSR",
+   "shader": "crystal",
+   "base": 0,
+   "per": {
+    "silicon": 60,
+    "ice": 60,
+    "neutron": 200
+   },
+   "requires": {
+    "has": [
+     "neutron"
+    ],
+    "share": {
+     "silicon": 0.15,
+     "ice": 0.1
+    }
+   },
+   "look": {
+    "kind": "terrain",
+    "low": "#6a3aa8",
+    "high": "#c08aff",
+    "peak": "#f2e0ff",
+    "sea": 0.3,
+    "deep": "#3a1a8a",
+    "shallow": "#9a6aff",
+    "cloud": 0.1,
+    "atmo": "#e0b8ff",
+    "emissive": 0.4,
+    "ice": 0
+   },
+   "desc": "수정 결정이 빛을 굴절시키는 행성."
+  },
+  {
+   "id": "twin",
+   "name": "쌍둥이 행성",
+   "grade": "SSR",
+   "shader": "terra",
+   "twin": true,
+   "base": 0,
+   "per": {
+    "mantle": 80,
+    "water": 80
+   },
+   "requires": {
+    "balance": {
+     "of": [
+      "mantle",
+      "water"
+     ],
+     "tolerance": 0.08
+    },
+    "share": {
+     "mantle": 0.2,
+     "water": 0.2
+    },
+    "maxCombo": 4
+   },
+   "look": {
+    "kind": "terrain",
+    "low": "#5a7a3a",
+    "high": "#b0a070",
+    "peak": "#f0ece0",
+    "sea": 0.5,
+    "deep": "#103a6a",
+    "shallow": "#3aa0c8",
+    "cloud": 0.4,
+    "atmo": "#a8d8ff",
+    "emissive": 0,
+    "ice": 0.1
+   },
+   "desc": "바다와 대륙이 꼭 반씩 나뉜 쌍둥이."
+  },
+  {
+   "id": "diamond",
+   "name": "다이아몬드 행성",
+   "grade": "UR",
+   "hidden": true,
+   "shader": "diamond",
+   "base": 0,
+   "per": {
+    "carbon": 150,
+    "neutron": 150
+   },
+   "requires": {
+    "recipes": [
+     "diamondcore"
+    ],
+    "share": {
+     "carbon": 0.25
+    }
+   },
+   "look": {
+    "kind": "terrain",
+    "low": "#9ac8e8",
+    "high": "#e8f6ff",
+    "peak": "#ffffff",
+    "sea": 0.25,
+    "deep": "#4a8ac8",
+    "shallow": "#bfe8ff",
+    "cloud": 0,
+    "atmo": "#e8f8ff",
+    "emissive": 0.5,
+    "ice": 0
+   },
+   "desc": "탄소가 압축되어 통째로 다이아몬드가 됐다."
+  },
+  {
+   "id": "rogue",
+   "name": "떠돌이 행성",
+   "grade": "UR",
+   "hidden": true,
+   "shader": "rogue",
+   "base": 0,
+   "per": {
+    "dust": 60,
+    "ice": 60
+   },
+   "requires": {
+    "unstable": true,
+    "maxCombo": 6
+   },
+   "look": {
+    "kind": "terrain",
+    "low": "#1e2436",
+    "high": "#3a4a66",
+    "peak": "#9ab0d0",
+    "sea": 0.3,
+    "deep": "#0a1020",
+    "shallow": "#1a3050",
+    "cloud": 0,
+    "atmo": "#4a6aa0",
+    "emissive": 0,
+    "ice": 0.5
+   },
+   "desc": "항성을 떠나 홀로 떠도는 차가운 행성."
+  },
+  {
+   "id": "civilization",
+   "name": "문명 행성",
+   "grade": "UR",
+   "hidden": true,
+   "shader": "terra",
+   "cityLights": true,
+   "base": 0,
+   "per": {
+    "lifeseed": 500,
+    "mantle": 60,
+    "water": 60
+   },
+   "requires": {
+    "has": [
+     "lifeseed"
+    ],
+    "recipes": [
+     "lifeseed",
+     "mantle",
+     "water"
+    ],
+    "maxCombo": 5
+   },
+   "look": {
+    "kind": "terrain",
+    "low": "#3a7a4a",
+    "high": "#90b070",
+    "peak": "#f0ece0",
+    "sea": 0.5,
+    "deep": "#0a3070",
+    "shallow": "#2898c0",
+    "cloud": 0.35,
+    "atmo": "#8fd0ff",
+    "emissive": 0,
+    "ice": 0.1
+   },
+   "desc": "밤이 되면 도시의 불빛이 반짝인다."
+  }
+ ]
 }

@@ -1,6 +1,10 @@
 # 행성 공방
 
-웹 기반 3D 조합 퍼즐 + 행성 수집 게임. 현재 **Phase 2 완료**(우주 배경 + 빈 원반, 코어 모듈) 상태.
+웹 기반 3D 조합 퍼즐 + 행성 수집 게임. **플레이 가능** — 한 판(12턴) 진행 → 행성 탄생 → 내 은하 등록, 도감·확률 정보·설정.
+
+플레이: https://sunny8197783.github.io/PlanetBattle/
+
+조작: 아래에서 원소를 고르고, 원반 둘레를 눌러(드래그 후 떼기) 떨어뜨린다. 키보드는 ←→ 조준, 1~3 선택, 스페이스 드롭.
 
 ## 실행
 
@@ -11,6 +15,8 @@ npm run build      # 타입 검사 후 dist/ 생성
 npm run preview    # 빌드 결과 서빙
 npm run shot -- --click "공방 열기"   # 헤드리스 브라우저 스크린샷 + 콘솔 오류 수집 (shots/)
 npx tsx scripts/check-prng.ts          # PRNG 결정론 검증
+npx tsx scripts/sim.ts 1000            # 무작위 플레이 시뮬레이션 (등급 분포)
+node scripts/playtest.mjs [--mobile]   # 브라우저 자동 플레이 E2E
 ```
 
 ## 기술 스택 (기획서와 달라진 점)

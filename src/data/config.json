@@ -1,9 +1,32 @@
 {
-  "run": { "turns": 12, "choices": 3, "rerolls": 2, "specialChance": 0.18, "seedPrefix": "pw" },
-  "disc": { "radius": 6.2, "dropRadius": 6.9, "massLimit": 220, "maxBodies": 48 },
-  "physics": { "gravity": 26, "damping": 2.4, "restitution": 0.18, "substeps": 4, "sleepSpeed": 0.03 },
-  "camera": { "fov": 42, "workshop": [0, 16.5, 10], "title": [0, 6.2, 18.5], "parallax": 0.35, "fitAspect": 0.98 },
-  "feel": { "shake": 1.0, "hitstop": 1.0, "squash": 1.0, "flash": 1.0, "haptics": true },
+  "run": {
+    "turns": 12,
+    "choices": 3,
+    "rerolls": 2,
+    "specialChance": 0.2,
+    "seedPrefix": "pw",
+    "pool": { "dust": 30, "hydrogen": 26, "helium": 14, "carbon": 12, "oxygen": 12, "silicon": 6, "iron": 5 },
+    "specialPool": { "comet": 3, "storm": 3, "flare": 3, "frost": 3, "blackhole": 2 },
+    "counts": { "dust": 3, "hydrogen": 2 },
+    "settleMinTime": 0.6,
+    "settleMaxTime": 3.2,
+    "settleSpeed": 0.35
+  },
+  "disc": { "radius": 6.2, "dropRadius": 6.9, "massLimit": 220, "maxBodies": 48, "warnAt": 0.8 },
+  "physics": {
+    "gravity": 13,
+    "damping": 1.6,
+    "restitution": 0.15,
+    "substeps": 4,
+    "dropSpeed": 5,
+    "spread": 0.28,
+    "contactSlop": 0.04,
+    "mergeTime": 0.15,
+    "catalystRadius": 2.8,
+    "catalystDelay": 0.55
+  },
+  "camera": { "fov": 42, "workshop": [0, 16.5, 10], "title": [0, 6.2, 18.5], "galaxy": [0, 14, 22], "parallax": 0.35, "fitAspect": 0.98 },
+  "feel": { "shake": 1.0, "hitstop": 0.06, "squash": 1.0, "flash": 1.0, "haptics": true, "comboPitch": 1.0594631 },
   "quality": {
     "low": { "pixelRatio": 1, "post": false, "bloom": 0, "stars": 1200, "nebulaOctaves": 3 },
     "medium": { "pixelRatio": 1.5, "post": true, "bloom": 0.75, "stars": 2600, "nebulaOctaves": 4 },

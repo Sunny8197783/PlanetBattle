@@ -9,6 +9,11 @@ export interface GameEvents {
   'quality:change': { quality: Quality };
   'engine:resize': { width: number; height: number; aspect: number };
   'engine:contextlost': Record<string, never>;
+  'run:select': { index: number };
+  'run:reroll': Record<string, never>;
+  'run:new': Record<string, never>;
+  'run:register': { name: string };
+  'galaxy:refresh': Record<string, never>;
 }
 
 type Handler<T> = (payload: T) => void;
