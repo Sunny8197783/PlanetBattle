@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "note": "게임 내 '확률 정보' 화면에 그대로 공개되는 표. gradeMultiplier는 조건을 채운 후보의 가중치에 곱해진다.",
+  "gradeMultiplier": { "N": 1.0, "R": 0.9, "SR": 0.6, "SSR": 0.3, "UR": 0.12 },
+  "pity": {
+    "grade": "SSR",
+    "softStart": 12,
+    "softStep": 0.15,
+    "hardAt": 30,
+    "note": "SSR 이상이 softStart판 동안 안 나오면 판마다 SSR 이상 가중치에 softStep씩 더해 곱한다. hardAt판째에는 조건을 채운 SSR 후보가 있으면 확정."
+  },
+  "variation": {
+    "ringChance": 0.18,
+    "moons": [0.45, 0.3, 0.17, 0.08],
+    "sizeRange": [0.85, 1.25],
+    "paletteShift": 0.12
+  }
+}

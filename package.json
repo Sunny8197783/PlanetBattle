@@ -1,0 +1,31 @@
+{
+  "name": "planet-workshop",
+  "private": true,
+  "version": "0.2.0",
+  "description": "행성 공방 — 웹 기반 3D 조합 퍼즐 + 행성 수집 게임",
+  "type": "module",
+  "scripts": {
+    "dev": "node scripts/dev.mjs",
+    "build": "tsc --noEmit && node scripts/build.mjs",
+    "typecheck": "tsc --noEmit",
+    "preview": "node scripts/dev.mjs --preview",
+    "shot": "node scripts/shot.mjs"
+  },
+  "dependencies": {
+    "gsap": "3.15.1",
+    "howler": "2.2.4",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "three": "0.187.0",
+    "zustand": "5.1.0"
+  },
+  "devDependencies": {
+    "@types/howler": "^2.2.12",
+    "@types/react": "^19.2.0",
+    "@types/react-dom": "^19.2.0",
+    "@types/three": "0.187.0",
+    "esbuild": "^0.28.0",
+    "playwright": "^1.63.0",
+    "typescript": "^6.0.0"
+  }
+}

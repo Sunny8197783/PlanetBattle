@@ -1,0 +1,150 @@
+:root {
+  --ink: #f4eeff;
+  --ink-dim: #b9a9d9;
+  --violet: #b06bff;
+  --amber: #ffb86a;
+  --panel: rgba(22, 12, 44, 0.55);
+  --line: rgba(190, 150, 255, 0.28);
+  --font: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', system-ui, sans-serif;
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+  background: #05030c;
+  color: var(--ink);
+  font-family: var(--font);
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+  overscroll-behavior: none;
+  touch-action: none;
+  user-select: none;
+}
+
+#stage { position: fixed; inset: 0; display: block; width: 100vw; height: 100vh; height: 100dvh; }
+#ui { position: fixed; inset: 0; pointer-events: none; }
+.ui { position: absolute; inset: 0; }
+.ui button { pointer-events: auto; font-family: inherit; }
+
+/* ── 버튼 ── */
+.btn {
+  min-height: 48px;
+  padding: 0 28px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  color: var(--ink);
+  background: var(--panel);
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+  transition: transform 0.15s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+.btn:active { transform: scale(0.96); }
+.btn:focus-visible, .seg__btn:focus-visible { outline: 2px solid var(--amber); outline-offset: 3px; }
+.btn--primary {
+  border: 0;
+  padding: 0 44px;
+  min-height: 56px;
+  font-size: 18px;
+  color: #1c0b2e;
+  background: linear-gradient(135deg, #ffd9a0 0%, #ff9d6a 45%, #c77bff 100%);
+  box-shadow: 0 0 32px rgba(255, 160, 110, 0.45), 0 0 80px rgba(176, 107, 255, 0.35);
+}
+.btn--primary:hover { box-shadow: 0 0 44px rgba(255, 170, 120, 0.7), 0 0 110px rgba(176, 107, 255, 0.5); transform: translateY(-1px); }
+.btn--ghost { min-height: 44px; padding: 0 16px; font-size: 14px; font-weight: 500; color: var(--ink-dim); }
+
+/* ── 타이틀 ── */
+.title {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 14px;
+  padding: calc(9vh + var(--safe-top)) 24px 0;
+  text-align: center;
+  animation: rise 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+.title__eyebrow { margin: 0; font-size: 14px; letter-spacing: 0.32em; color: var(--ink-dim); }
+.title__logo {
+  margin: 0;
+  font-size: clamp(52px, 13vw, 112px);
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  line-height: 1.05;
+  background: linear-gradient(180deg, #fff6e6 10%, #ffc48a 48%, #c58bff 92%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 0 28px rgba(255, 170, 110, 0.35));
+}
+.title__sub { margin: 0; font-size: 16px; color: var(--ink-dim); }
+.title .btn--primary { margin-top: auto; margin-bottom: calc(11vh + var(--safe-bottom)); }
+
+/* ── 공방 HUD ── */
+.hud { position: absolute; inset: 0; animation: fade 0.8s ease both; }
+.hud__top {
+  position: absolute;
+  top: calc(12px + var(--safe-top));
+  left: 12px;
+  right: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.hud__stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 92px;
+  padding: 8px 16px;
+  border-radius: 16px;
+  border: 1px solid var(--line);
+  background: var(--panel);
+  backdrop-filter: blur(10px);
+}
+.hud__stat:first-of-type { margin-left: auto; }
+.hud__label { font-size: 11px; letter-spacing: 0.14em; color: var(--ink-dim); }
+.hud__value { font-size: 22px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.hud__value small { font-size: 12px; font-weight: 500; color: var(--ink-dim); }
+.hud__bottom {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: calc(72px + var(--safe-bottom));
+  display: flex;
+  justify-content: center;
+}
+.hud__note { margin: 0; padding: 8px 16px; border-radius: 999px; font-size: 13px; color: var(--ink-dim); background: rgba(10, 6, 24, 0.5); }
+
+/* ── 품질 토글 ── */
+.corner { position: absolute; right: 12px; bottom: calc(12px + var(--safe-bottom)); }
+.seg { display: flex; padding: 3px; border-radius: 999px; border: 1px solid var(--line); background: var(--panel); backdrop-filter: blur(10px); }
+.seg__btn {
+  min-width: 52px;
+  min-height: 44px;
+  padding: 0 12px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--ink-dim);
+  font-size: 13px;
+  cursor: pointer;
+}
+.seg__btn.is-on { background: rgba(176, 107, 255, 0.35); color: var(--ink); font-weight: 600; }
+
+@keyframes rise { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+@keyframes fade { from { opacity: 0; } to { opacity: 1; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .title, .hud { animation: none; }
+  .btn { transition: none; }
+}

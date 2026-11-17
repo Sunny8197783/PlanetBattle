@@ -1,0 +1,16 @@
+{
+  "run": { "turns": 12, "choices": 3, "rerolls": 2, "specialChance": 0.18, "seedPrefix": "pw" },
+  "disc": { "radius": 6.2, "dropRadius": 6.9, "massLimit": 220, "maxBodies": 48 },
+  "physics": { "gravity": 26, "damping": 2.4, "restitution": 0.18, "substeps": 4, "sleepSpeed": 0.03 },
+  "camera": { "fov": 42, "workshop": [0, 16.5, 10], "title": [0, 6.2, 18.5], "parallax": 0.35, "fitAspect": 0.98 },
+  "feel": { "shake": 1.0, "hitstop": 1.0, "squash": 1.0, "flash": 1.0, "haptics": true },
+  "quality": {
+    "low": { "pixelRatio": 1, "post": false, "bloom": 0, "stars": 1200, "nebulaOctaves": 3 },
+    "medium": { "pixelRatio": 1.5, "post": true, "bloom": 0.75, "stars": 2600, "nebulaOctaves": 4 },
+    "high": { "pixelRatio": 2, "post": true, "bloom": 1.0, "stars": 4200, "nebulaOctaves": 5 }
+  },
+  "grade": {
+    "workshop": { "tint": [1.06, 0.97, 1.08], "nebula": ["#1d0b3a", "#8a2f7a", "#ff8a4a"], "vignette": 0.55 },
+    "galaxy": { "tint": [0.94, 1.0, 1.12], "nebula": ["#06102e", "#123a7a", "#4ac8ff"], "vignette": 0.65 }
+  }
+}

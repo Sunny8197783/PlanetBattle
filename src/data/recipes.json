@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "catalysts": {
+    "lightning": { "name": "번개", "source": "storm" },
+    "starlight": { "name": "항성빛", "source": "flare" },
+    "heat": { "name": "열", "source": "flare" },
+    "cold": { "name": "저온", "source": "frost" }
+  },
+  "recipes": [
+    { "id": "water", "inputs": ["hydrogen", "oxygen"], "output": "water", "fx": "splash", "hint": "가벼운 것 + 숨 쉬는 색" },
+    { "id": "ice", "inputs": ["water"], "catalyst": "cold", "output": "ice", "fx": "freeze", "hint": "물 + 우주의 추위" },
+    { "id": "amino", "inputs": ["carbon", "water"], "catalyst": "lightning", "output": "amino", "fx": "spark", "hint": "뼈대 + 물 + 번쩍" },
+    { "id": "lifeseed", "inputs": ["amino", "water"], "catalyst": "starlight", "output": "lifeseed", "rare": true, "fx": "bloom", "hint": "아미노산 + 물 + 별빛" },
+    { "id": "mantle", "inputs": ["silicon", "iron"], "output": "mantle", "fx": "crunch", "hint": "모래의 씨앗 + 금속" },
+    { "id": "gas", "inputs": ["hydrogen", "helium"], "bulk": 3, "output": "gas", "fx": "puff", "hint": "가벼운 것들이 셋 이상 맞닿을 때" },
+    { "id": "lava", "inputs": ["iron"], "catalyst": "heat", "output": "lava", "fx": "melt", "hint": "금속 + 별의 열기" }
+  ]
+}

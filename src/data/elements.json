@@ -1,0 +1,28 @@
+{
+  "version": 1,
+  "mergeLine": ["dust", "hydrogen", "helium", "carbon", "oxygen", "silicon", "iron", "neutron"],
+  "elements": [
+    { "id": "dust", "name": "우주먼지", "kind": "base", "tier": 0, "radius": 0.42, "mass": 1, "color": "#cdb8ff", "glow": "#8f7bff", "face": "sleepy", "hint": "어디에나 있는 별의 부스러기." },
+    { "id": "hydrogen", "name": "수소", "kind": "base", "tier": 1, "radius": 0.52, "mass": 2, "color": "#8fdcff", "glow": "#3aa8ff", "face": "happy", "hint": "먼지 둘이 만나면 가장 가벼운 것이 된다." },
+    { "id": "helium", "name": "헬륨", "kind": "base", "tier": 2, "radius": 0.63, "mass": 4, "color": "#ffe58a", "glow": "#ffb53a", "face": "giggle", "hint": "수소끼리 꼭 껴안으면 웃음이 난다." },
+    { "id": "carbon", "name": "탄소", "kind": "base", "tier": 3, "radius": 0.75, "mass": 8, "color": "#a9b4d6", "glow": "#5d6bb0", "face": "calm", "hint": "헬륨이 뭉치면 만물의 뼈대가 된다." },
+    { "id": "oxygen", "name": "산소", "kind": "base", "tier": 4, "radius": 0.88, "mass": 16, "color": "#7ef5cf", "glow": "#18c79a", "face": "happy", "hint": "탄소 다음 차례. 숨 쉬는 색." },
+    { "id": "silicon", "name": "규소", "kind": "base", "tier": 5, "radius": 1.02, "mass": 32, "color": "#f6c08a", "glow": "#d9853a", "face": "calm", "hint": "산소 둘이 굳으면 모래의 씨앗이 된다." },
+    { "id": "iron", "name": "철", "kind": "base", "tier": 6, "radius": 1.18, "mass": 64, "color": "#ff9a7a", "glow": "#e2452f", "face": "stern", "hint": "별이 마지막으로 벼려 내는 금속." },
+    { "id": "neutron", "name": "중성자 핵", "kind": "base", "tier": 7, "radius": 1.36, "mass": 128, "color": "#f4f0ff", "glow": "#b58cff", "face": "awe", "hint": "철마저 무너진 자리에 남는 것." },
+
+    { "id": "water", "name": "물", "kind": "compound", "tier": 3, "radius": 0.78, "mass": 10, "color": "#6fb7ff", "glow": "#2a6dff", "face": "happy", "hint": "가장 가벼운 것과 숨 쉬는 색이 만나면." },
+    { "id": "ice", "name": "얼음", "kind": "compound", "tier": 4, "radius": 0.82, "mass": 10, "color": "#d8f4ff", "glow": "#8fd0ff", "face": "sleepy", "hint": "물에 우주의 추위가 닿으면." },
+    { "id": "amino", "name": "아미노산", "kind": "compound", "tier": 5, "radius": 0.9, "mass": 20, "color": "#c9f77a", "glow": "#7fd13a", "face": "giggle", "hint": "뼈대, 물, 그리고 번쩍이는 한 방." },
+    { "id": "lifeseed", "name": "생명의 씨앗", "kind": "compound", "rare": true, "tier": 7, "radius": 1.0, "mass": 30, "color": "#fff3a8", "glow": "#5cff9d", "face": "awe", "hint": "아미노산이 물과 별빛을 함께 만난 날." },
+    { "id": "mantle", "name": "암석 맨틀", "kind": "compound", "tier": 6, "radius": 1.22, "mass": 96, "color": "#c79a78", "glow": "#8a5a3a", "face": "stern", "hint": "모래의 씨앗과 금속이 서로를 붙든다." },
+    { "id": "gas", "name": "가스 외피", "kind": "compound", "tier": 4, "radius": 1.1, "mass": 12, "color": "#ffd0a8", "glow": "#ff8f6a", "face": "giggle", "hint": "가벼운 것들이 아주 많이 모이면 부푼다." },
+    { "id": "lava", "name": "용암 코어", "kind": "compound", "tier": 6, "radius": 1.15, "mass": 70, "color": "#ffb04a", "glow": "#ff3d1a", "face": "stern", "hint": "금속에 별의 열기를 쬐면 녹아내린다." },
+
+    { "id": "comet", "name": "혜성", "kind": "special", "effect": "comet", "radius": 0.6, "mass": 3, "color": "#bfe9ff", "glow": "#7ad0ff", "face": "happy", "hint": "닿는 곳에 물을 뿌리고 사라진다." },
+    { "id": "storm", "name": "번개 구름", "kind": "special", "effect": "lightning", "radius": 0.66, "mass": 2, "color": "#e9d8ff", "glow": "#b07bff", "face": "stern", "hint": "주변 원소에 번개를 내린다." },
+    { "id": "flare", "name": "항성 플레어", "kind": "special", "effect": "starlight", "radius": 0.66, "mass": 2, "color": "#fff0b0", "glow": "#ff9a2a", "face": "awe", "hint": "별빛과 열을 한꺼번에 쏟는다." },
+    { "id": "frost", "name": "우주 냉기", "kind": "special", "effect": "cold", "radius": 0.6, "mass": 2, "color": "#e6fbff", "glow": "#9be4ff", "face": "sleepy", "hint": "닿은 것을 차갑게 식힌다." },
+    { "id": "blackhole", "name": "블랙홀 조각", "kind": "special", "effect": "clear", "radius": 0.55, "mass": 6, "color": "#3a2a5a", "glow": "#a06bff", "face": "calm", "hint": "주변의 작은 것들을 삼켜 원반을 정리한다." }
+  ]
+}
